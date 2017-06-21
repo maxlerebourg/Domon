@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
  */
 public class MapJeux extends Map{
     private Heros heros;
+
     public MapJeux(){
         super("Coco");
         heros = new Heros();
@@ -22,12 +23,10 @@ public class MapJeux extends Map{
     public void mouseClicked(MouseEvent e) {
         heros.setPosX(x);
         heros.setPosY(y);
+        pane.removeAll();
         pane = addGraphique(heros);
-        fenetre = new JFrame("Domon");
-        fenetre.setSize(1000,800);
-        fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        fenetre.removeAll();
         fenetre.add(pane);
-        fenetre.setVisible(true);
     }
 
 }
