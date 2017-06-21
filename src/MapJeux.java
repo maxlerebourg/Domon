@@ -11,22 +11,27 @@ public class MapJeux extends Map{
     public MapJeux(){
         super("Coco");
         heros = new Heros();
-        pane = addGraphique(heros);
-        fenetre = new JFrame("Domon");
-        fenetre.setSize(1000,800);
-        fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pane = new JPanel();
+        pane.setLayout(new GridLayout(tabMove.size(),tabMove.get(0).size()));
+        pane = addGraphique(pane, heros);
         fenetre.add(pane);
-        fenetre.setVisible(true);
+        fenetre.revalidate();
         //deplacement();
 
     }
+    @Override
     public void mouseClicked(MouseEvent e) {
         heros.setPosX(x);
         heros.setPosY(y);
-        pane.removeAll();
-        pane = addGraphique(heros);
-        fenetre.removeAll();
-        fenetre.add(pane);
+        System.out.println(x + " " + y);
+        pane = addGraphique(pane, heros);
+        pane.repaint();
+        fenetre.revalidate();
+        /*fenetre = new JFrame("Domon");
+        fenetre.setSize(1000,800);
+        fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        fenetre.setVisible(true);
+        fenetre.add(pane);*/
     }
 
 }

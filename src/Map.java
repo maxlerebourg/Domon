@@ -9,7 +9,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class Map implements MouseListener{
-    protected JPanel pane = new JPanel();
+    protected JPanel pane;
     protected JFrame fenetre;
     protected ArrayList<ArrayList<Integer>> tabMove = new ArrayList<>();
     protected int i,j,x,y;
@@ -29,7 +29,7 @@ public class Map implements MouseListener{
             JButton p = (JButton) e.getSource();
             x = (int)p.getX()/(panel.getWidth()/tabMove.get(0).size());
             y = (int)p.getY()/(panel.getHeight()/tabMove.size());
-            System.out.println(x+"/"+y);
+            //System.out.println(x+"/"+y);
         });
         return button;
     }
@@ -56,11 +56,28 @@ public class Map implements MouseListener{
         }
         return panel;
     }
-    protected JPanel addGraphique(Heros heros){
-        JPanel panel = addGraphique();
+    protected JPanel addGraphique(JPanel panel, Heros heros){
+        for (i = 0 ; i < tabMove.size(); i++) {
+            for (j = 0; j < tabMove.get(i).size(); j++) {
+                switch (tabMove.get(i).get(j)) {
+                    case 0 :
+                        JButton but = cas("terre", panel);
+                        panel.add(but);
+                        break;
+                    case 1 :
+                        JButton bot = cas("herbe",panel);
+                        panel.add(bot);
+                        break;
+                    default :
+                        JButton bit = cas("herbe",panel);
+                        panel.add(bit);
+                        break;
+                }
+            }
+        }
         int index = heros.getPosX()* tabMove.get(0).size() + heros.getPosY();
         panel.remove(index);
-        panel.add(new JButton(heros.getImg()), heros.getPosX(), heros.getPosY());
+        panel.add(new JButton(heros.getImg()), heros.getPosY(), heros.getPosX());
         return panel;
     }
     public Map(){
@@ -94,13 +111,10 @@ public class Map implements MouseListener{
         fenetre = new JFrame("Domon");
         fenetre.setSize(1000,800);
         fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        pane = addGraphique();
-        fenetre.setContentPane(pane);
         fenetre.setVisible(true);
     }
     public Map(String mapName){
         try {
-
             bis = new BufferedReader(new FileReader(new File("./Map/"+mapName+".txt")));
             String line;
             while ((line = bis.readLine()) != null){
